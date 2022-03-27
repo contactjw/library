@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.3fr 15fr 0.7fr;
+    height: 100vh;
+}
+
+.login {
+    font-weight: 500;
+    width: 80px;
+    height: 40px;
+}
+
+
+/* Header Start */
+
+.header {
+    background-color: gainsboro;
+    grid-row: 1/2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+/* Header End */
+
+
+
+/* Main Start */
+
+.main {
+    background-color:lightcyan;
+    grid-row: 2/3;
+    padding: 20px;
+}
+
+.add-book-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.books-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/* Main End */
+
+
+
+/* Footer Start */
+
+.footer {
+    background-color: bisque;
+    grid-row: 3/4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Footer End */
+
+
+
+
+/* Book styles */
+
+.new-book-container form{
+    display: flex;
+    flex-direction: column;
+}
+
+.new-book-container {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 30%;
+    min-width: 220px;
+    max-width: 275px;
+    height: auto;
+    background-color: white;
+    padding: 15px 20px 20px 20px;
+    box-shadow: 0 0 0 max(100vh, 100vw) rgba(0, 0, 0, .3);
+    z-index: 2;
+}
+
+.new-book-container button {
+    margin-top: 15px;
+    height: 35px;
+}
+
+.new-book-container input {
+    padding-left: 15px;
+    height: 35px;
+    width: 100%;
+    border-radius: 8px;
+    background-color: antiquewhite;
+    border: 1px solid rgb(190, 190, 190);
+    margin-bottom: 15px;
+}
+
+.new-book-heading {
+    font-weight: 600;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
