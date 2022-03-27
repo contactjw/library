@@ -7,13 +7,19 @@ let removeBookButton;
 let myLibrary = [];
 
 function Book() {
+    isSubmitted = false;
+    hasRead = false;
+    title = "";
+    author = "";
+    pages = 0;
+
 
     let newBookContainer = document.createElement("div");
     newBookContainer.setAttribute("class", "new-book-container");
 
     let newBookHeading = document.createElement("div");
     newBookHeading.setAttribute("class", "new-book-heading");
-    newBookHeading.innerHTML="New Book";
+    newBookHeading.innerHTML = "New Book";
     newBookContainer.appendChild(newBookHeading);
 
     let form = document.createElement("form");
@@ -22,6 +28,7 @@ function Book() {
 
     let titleInput = document.createElement("input");
     titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "title");
     titleInput.setAttribute("placeholder", "title");
     titleInput.required = true;
     form.appendChild(titleInput);
@@ -40,24 +47,24 @@ function Book() {
 
     let haveReadButton = document.createElement("button");
     haveReadButton.setAttribute("id", "read");
-    haveReadButton.innerHTML="Read";
+    haveReadButton.innerHTML = "Read";
     form.appendChild(haveReadButton);
 
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-book");
-    submitButton.innerHTML="Submit";
+    submitButton.innerHTML = "Submit";
     form.appendChild(submitButton);
 
     let removeButton = document.createElement("button");
     removeButton.setAttribute("id", "remove");
-    removeButton.innerHTML="Remove";
+    removeButton.innerHTML = "Remove";
     form.appendChild(removeButton);
 
     booksContainer.appendChild(newBookContainer);
 
     submitBookButton = document.querySelector(".submit-book");
     removeBookButton = document.querySelector(".remove");
-    
+
 }
 
 function addBookToLibrary() {
@@ -70,19 +77,21 @@ addBookButton.addEventListener('click', function(event) {
     document.body.style.pointerEvents = "none";
 
     let newBook = new Book();
-    myLibrary.push(newBook);
+    // myLibrary.push(newBook);
 
     booksContainer.style.pointerEvents = "auto";
 });
 
+
+// if user clicks out of book, 
 document.addEventListener('click', function(event) {
     let book = booksContainer.lastChild;
     let bookButton = document.querySelector(".add-book-button");
     let isClickInside = (book.contains(event.target) || bookButton.contains(event.target));
   
-    if (!isClickInside) {
+    if (!isClickInside && !book.isSubmitted) {
         document.body.style.pointerEvents = "auto";
-        // book.remove();
+        book.remove();
     }
 });
 
@@ -108,9 +117,25 @@ document.addEventListener('click',function(e){
         let grandparent = parent.parentElement;
         grandparent.style.boxShadow = 'none';
         document.body.style.pointerEvents = "auto";
+        booksContainer.lastChild.isSubmitted = true;
         //do something
+        title = this.getElementById("title").value;
+        console.log(title);
+
+        booksContainer.lastChild;
      }
  });
 
+
+ document.addEventListener('click',function(e){
+    if(e.target && e.target.id == 'read'){
+        let target = e.target;
+        if (target.hasRead) {
+            target.style.backgroundColor = "green";
+        }
+
+
+     }
+ });
 
 
