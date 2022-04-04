@@ -23,17 +23,19 @@
 /* Header Start */
 
 .header {
-    background-color: gainsboro;
+    /* background-color: #737373; */
+    background-color: #27272a;
     grid-row: 1/2;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
+    color: white;
 }
 
 .title {
-    font-weight: bold;
+    font-weight: 500;
     font-size: 30px;
 }
 
@@ -44,7 +46,7 @@
 /* Main Start */
 
 .main {
-    background-color:lightcyan;
+    background-color: white;
     grid-row: 2/3;
     padding: 20px;
 }
@@ -62,6 +64,19 @@
     gap: 45px;
 }
 
+.add-book-button {
+    height: 55px;
+    width: 150px;
+    font-weight: 500;
+    font-size: 30px;
+    /* background: #737373; */
+    background-color: #27272a;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
 /* Main End */
 
 
@@ -69,11 +84,13 @@
 /* Footer Start */
 
 .footer {
-    background-color: bisque;
+    /* background-color: #737373; */
+    background-color: #27272a;
     grid-row: 3/4;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 
 /* Footer End */
@@ -171,8 +188,9 @@
     min-width: 220px;
     /* max-width: 275px; */
     height: 300px;
-    background-color: white;
+    background-color: #27272a;
     padding: 15px 20px 20px 20px;
+    color: white;
 }
 
 .new-book-container button {
