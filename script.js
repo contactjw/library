@@ -1,141 +1,154 @@
-let booksContainer = document.querySelector(".books-container");
-let addBookButton = document.querySelector(".add-book-button");
-let submitBookButton;
-let removeBookButton;
+const newBookButton = document.querySelector(".add-book-button");
+const overlay = document.getElementById("overlay");
+const titleInput =  document.getElementById("title");
+const authorInput =  document.getElementById("author");
+const pagesInput =  document.getElementById("pages");
+const hasReadInput = document.getElementById("hasRead");
+const submitBookButton = document.getElementById("submit-book");
+let removeBookButtons = document.getElementsByClassName("remove-book");
+let readBookButtons = document.getElementsByClassName("read-book");
+const booksContainer = document.querySelector(".books-container");
+
+
 
 
 let myLibrary = [];
 
-function Book() {
-    isSubmitted = false;
-    hasRead = false;
-    title = "";
-    author = "";
-    pages = 0;
+function Book(title, author, pages, hasRead) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.hasRead = hasRead;
+}
+  
+function addBookToLibrary() {
+    const newBook = new Book(titleInput.value, authorInput.value, pagesInput.value, hasReadInput.checked);
+    myLibrary.push(newBook);
+    console.log(myLibrary);
+    displayBooks();
+    for (let i = 0; i < removeBookButtons.length; i++) {
+        removeBookButtons[i].addEventListener("click", () => {
+            myLibrary.splice(i, 1);
+            console.log(myLibrary);
+            removeBookButtons[i].parentElement.remove();
+        })
+    }
 
+    for (let i = 0; i < readBookButtons.length; i++) {
+        readBookButtons[i].addEventListener("click", () => {
+            if (readBookButtons[i].innerHTML == "Read") {
+                readBookButtons[i].innerHTML = "Not Read";
+                notRead(readBookButtons[i]);
+            }
+            else {
+                readBookButtons[i].innerHTML = "Read";
+                read(readBookButtons[i]);
+            }
+        })
+    }    
+}
+
+
+function displayBooks() {
+    resetBooks();
+    myLibrary.forEach(Book => {
 
     let newBookContainer = document.createElement("div");
     newBookContainer.setAttribute("class", "new-book-container");
 
-    let newBookHeading = document.createElement("div");
-    newBookHeading.setAttribute("class", "new-book-heading");
-    newBookHeading.innerHTML = "New Book";
-    newBookContainer.appendChild(newBookHeading);
+    let titleInfo = document.createElement("div");
+    titleInfo.innerHTML = Book.title;
+    titleInfo.setAttribute("class", "title");
+    titleInfo.setAttribute("class", "new-book-heading");
+    newBookContainer.appendChild(titleInfo);
 
-    let form = document.createElement("form");
-    form.setAttribute("action", "#");
-    newBookContainer.appendChild(form);
+    let authorInfo = document.createElement("div");
+    authorInfo.innerHTML = "By: " + Book.author;
+    authorInfo.setAttribute("class", "author");
+    newBookContainer.appendChild(authorInfo);
 
-    let titleInput = document.createElement("input");
-    titleInput.setAttribute("type", "text");
-    titleInput.setAttribute("id", "title");
-    titleInput.setAttribute("placeholder", "title");
-    titleInput.required = true;
-    form.appendChild(titleInput);
-
-    let authorInput = document.createElement("input");
-    authorInput.setAttribute("type", "text");
-    authorInput.setAttribute("placeholder", "author");
-    authorInput.required = true;
-    form.appendChild(authorInput);
-
-    let pagesInput = document.createElement("input");
-    pagesInput.setAttribute("type", "text");
-    pagesInput.setAttribute("placeholder", "pages");
-    pagesInput.required = true;
-    form.appendChild(pagesInput);
+    let pagesInfo = document.createElement("div");
+    pagesInfo.innerHTML = Book.pages + " Pages";
+    pagesInfo.setAttribute("class", "pages");
+    newBookContainer.appendChild(pagesInfo);
 
     let haveReadButton = document.createElement("button");
-    haveReadButton.setAttribute("id", "read");
-    haveReadButton.innerHTML = "Read";
-    form.appendChild(haveReadButton);
-
-    let submitButton = document.createElement("button");
-    submitButton.setAttribute("id", "submit-book");
-    submitButton.innerHTML = "Submit";
-    form.appendChild(submitButton);
+    haveReadButton.setAttribute("class", "read-book");
+    if (Book.hasRead) {
+        haveReadButton.innerHTML = "Read";
+        read(haveReadButton);
+    } else {
+        haveReadButton.innerHTML = "Not Read";
+        notRead(haveReadButton);
+    }
+    newBookContainer.appendChild(haveReadButton);
 
     let removeButton = document.createElement("button");
-    removeButton.setAttribute("id", "remove");
+    removeButton.setAttribute("class", "remove-book");
     removeButton.innerHTML = "Remove";
-    form.appendChild(removeButton);
+    newBookContainer.appendChild(removeButton);
 
     booksContainer.appendChild(newBookContainer);
-
-    submitBookButton = document.querySelector(".submit-book");
-    removeBookButton = document.querySelector(".remove");
-
-}
-
-function addBookToLibrary() {
-
+    })
 }
 
 
-addBookButton.addEventListener('click', function(event) {
+// Event Listeners
 
-    document.body.style.pointerEvents = "none";
+newBookButton.addEventListener("click", () => {
+    const modal = document.querySelector(".modal");
+    openModal(modal);
+})
 
-    let newBook = new Book();
-    // myLibrary.push(newBook);
+submitBookButton.addEventListener("click", () => {
+    const modal = document.querySelector(".modal.active");
+    addBookToLibrary();
+    close(modal);
+    clearForm();
+})
 
-    booksContainer.style.pointerEvents = "auto";
-});
-
-
-// if user clicks out of book, 
-document.addEventListener('click', function(event) {
-    let book = booksContainer.lastChild;
-    let bookButton = document.querySelector(".add-book-button");
-    let isClickInside = (book.contains(event.target) || bookButton.contains(event.target));
-  
-    if (!isClickInside && !book.isSubmitted) {
-        document.body.style.pointerEvents = "auto";
-        book.remove();
-    }
-});
+overlay.addEventListener("click", () => {
+    const modal = document.querySelector(".modal.active");
+    close(modal);
+    clearForm();
+})
 
 
-// Weird way to remove elements parents, but it works!
-
-document.addEventListener('click',function(e){
-    if(e.target && e.target.id == 'remove'){
-        console.log("Hello");
-        let target = e.target;
-        let parent = e.target.parentElement;
-        let grandparent = parent.parentElement;
-        grandparent.remove();
-        //do something
-     }
- });
 
 
- document.addEventListener('click',function(e){
-    if(e.target && e.target.id == 'submit-book'){
-        let target = e.target;
-        let parent = e.target.parentElement;
-        let grandparent = parent.parentElement;
-        grandparent.style.boxShadow = 'none';
-        document.body.style.pointerEvents = "auto";
-        booksContainer.lastChild.isSubmitted = true;
-        //do something
-        title = this.getElementById("title").value;
-        console.log(title);
+// Utility Functions
 
-        booksContainer.lastChild;
-     }
- });
+function openModal(modal) {
+    if (modal == null) return;
+    modal.classList.add("active");
+    overlay.classList.add("active");
+}
+
+function close(modal) {
+    if (modal == null) return;
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+}
 
 
- document.addEventListener('click',function(e){
-    if(e.target && e.target.id == 'read'){
-        let target = e.target;
-        if (target.hasRead) {
-            target.style.backgroundColor = "green";
-        }
+// Change color of read button to green or red based on if user read the book
+function read(element) {
+    element.classList.remove("not-read-color");
+    element.classList.add("read-color");
+}
 
+function notRead(element) {
+    element.classList.add("not-read-color");
+    element.classList.remove("read-color");
+}
 
-     }
- });
+function clearForm() {
+    titleInput.value = "";
+    authorInput.value = "";
+    pagesInput.value = "";
+    hasReadInput.checked = false;
+}
 
-
+function resetBooks() {
+    booksContainer.innerHTML = "";
+}

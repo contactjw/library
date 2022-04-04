@@ -26,6 +26,23 @@
             <div class="add-book-container">
                 <button class="add-book-button">Add Book</button>
             </div>
+
+            <!-- Hidden modal -->
+            <div class="modal" id="modal">
+                <div class="new-book-heading">New Book</div>
+                <form action="#">
+                    <input class="inputs" type="text" id="title" placeholder="title" required>
+                    <input class="inputs" type="text" id="author" placeholder="author" required>
+                    <input class="inputs" type="text" id="pages" placeholder="pages" required>
+                    <div class="has-read-setup">
+                        <label for="hasRead">Have you read?</label>
+                        <input type="checkbox" id="hasRead">  
+                    </div>
+                    <button id="submit-book">Submit</button>
+                </form>
+            </div>
+            <!-- hidden modal end -->
+
             <div class="books-container">
                 <!-- Books will be added here -->
             </div>
@@ -37,7 +54,7 @@
 
     </div>
 
-
+    <div id="overlay"></div>
     <script src="./script.js"></script>
 </body>
 </html>
